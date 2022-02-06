@@ -1,4 +1,5 @@
 import 'package:app/services/auth.dart';
+import 'package:app/services/socket.dart';
 import 'package:app/widgets/boton_azul.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +56,7 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
@@ -85,6 +87,7 @@ class __FormState extends State<_Form> {
                     );
 
                     if (loginOK) {
+                      socketService.connect();
                       Navigator.pushReplacementNamed(context, 'usuarios');
                     } else {
                       mostrarAlerta(

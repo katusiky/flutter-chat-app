@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
+import '../services/socket.dart';
 
 class LoadingPage extends StatelessWidget {
   @override
@@ -22,10 +23,12 @@ class LoadingPage extends StatelessWidget {
 
   Future checkLoginState(BuildContext context) async {
     final authService = Provider.of<AuthService>(context, listen: false);
+    final socketService = Provider.of<SocketService>(context, listen: false);
 
     final authenticado = await authService.isLoggedIn();
 
     if (authenticado) {
+      socketService.connect();
       return Navigator.pushReplacement(
         context,
         PageRouteBuilder(
